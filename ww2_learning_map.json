@@ -1,0 +1,218 @@
+{
+  "title": "World War II",
+  "subtitle": "Year 10 Learning Map",
+  "overview": {
+    "title": "World War II Overview",
+    "description": "Select a cluster to explore a key dimension of World War II, then choose a node to examine a more focused idea.",
+    "sections": [
+      {
+        "title": "Why this topic matters",
+        "text": "World War II is a rich historical topic because it can be understood through causes, events, experiences, change, significance and debate. A learning map helps break the topic into connected clusters without losing the larger picture."
+      },
+      {
+        "title": "Guiding question",
+        "quote": "How do causes, experiences, turning points and legacies help us understand World War II and its significance for Australia?"
+      }
+    ]
+  },
+  "clusters": [
+    {
+      "id": "causes",
+      "title": "Causes of the Second World War",
+      "color": "#4A90C4",
+      "light": "#cde3f5",
+      "description": "This cluster explores the political, economic and ideological conditions that contributed to the outbreak of war.",
+      "nodes": [
+        {
+          "title": "Treaty of Versailles",
+          "subtitle": "aftermath of World War I",
+          "description": "The Treaty of Versailles imposed harsh penalties on Germany, contributing to resentment, instability and later political extremism.",
+          "significance": "This node helps students connect the end of one war to the causes of another, showing how unresolved tensions can shape future conflict."
+        },
+        {
+          "title": "Rise of dictators",
+          "subtitle": "Germany, Italy and Japan",
+          "description": "Authoritarian leaders promoted nationalism, militarism and expansion, increasing international tension.",
+          "significance": "This highlights how leadership, ideology and political systems influenced the path to war."
+        },
+        {
+          "title": "Failure of collective security",
+          "subtitle": "League of Nations and weak responses",
+          "description": "International efforts to prevent aggression were limited, allowing expansionist states to act with fewer consequences.",
+          "significance": "This helps students examine why international systems sometimes fail to prevent conflict."
+        },
+        {
+          "title": "Appeasement",
+          "subtitle": "responses of Britain and France",
+          "description": "Some governments tried to avoid war by making concessions, a policy that remains debated by historians.",
+          "significance": "This node opens up interpretation and debate, not just factual recall."
+        }
+      ]
+    },
+    {
+      "id": "australian-experiences",
+      "title": "Australian Experiences of World War II",
+      "color": "#6AAF6A",
+      "light": "#c8e8c8",
+      "description": "This cluster examines how Australians experienced the war through military service, fear of invasion, labour changes and social disruption.",
+      "nodes": [
+        {
+          "title": "Service and sacrifice",
+          "subtitle": "soldiers, nurses and prisoners of war",
+          "description": "Australians served in different theatres of war, facing danger, hardship and loss.",
+          "significance": "This helps students move beyond broad national narratives to the lived experiences of individuals and groups."
+        },
+        {
+          "title": "The war in the Pacific",
+          "subtitle": "regional threat and strategy",
+          "description": "The Pacific War brought the conflict closer to Australia and reshaped strategic priorities.",
+          "significance": "This is central to understanding why World War II had a distinct meaning for Australia."
+        },
+        {
+          "title": "Women’s roles",
+          "subtitle": "expanded responsibilities",
+          "description": "Women took on new wartime roles in services, industry and community life, changing expectations and opportunities.",
+          "significance": "This supports discussion of both wartime change and the limits of that change."
+        },
+        {
+          "title": "Fear and uncertainty",
+          "subtitle": "air raids and invasion anxiety",
+          "description": "Events such as the bombing of Darwin heightened fear and changed how Australians understood their security.",
+          "significance": "This helps students connect national identity to vulnerability, geography and wartime experience."
+        }
+      ]
+    },
+    {
+      "id": "turning-points",
+      "title": "Turning Points of the Second World War",
+      "color": "#E8A44A",
+      "light": "#fae3bc",
+      "description": "This cluster focuses on key events that shifted momentum, strategy or public understanding during the war.",
+      "nodes": [
+        {
+          "title": "Fall of France",
+          "subtitle": "1940",
+          "description": "Germany’s rapid victory in Western Europe shocked the world and reshaped Allied strategy.",
+          "significance": "This shows how early Axis successes transformed expectations about the scale and nature of the war."
+        },
+        {
+          "title": "Pearl Harbor",
+          "subtitle": "1941",
+          "description": "Japan’s attack on Pearl Harbor brought the United States directly into the war.",
+          "significance": "This node matters because it changed the scale, alliances and resources involved in the conflict."
+        },
+        {
+          "title": "Battle of Stalingrad",
+          "subtitle": "1942–43",
+          "description": "A major turning point on the Eastern Front, weakening German momentum and boosting Soviet advance.",
+          "significance": "This helps students see that turning points were global, not limited to a single front."
+        },
+        {
+          "title": "D-Day",
+          "subtitle": "1944",
+          "description": "The Allied invasion of Normandy marked a decisive step in liberating Western Europe.",
+          "significance": "This node is often central in public memory, making it useful for comparing historical significance and commemoration."
+        }
+      ]
+    },
+    {
+      "id": "home-front",
+      "title": "Home Front: Continuity and Change",
+      "color": "#7A5CCF",
+      "light": "#ddd3ff",
+      "description": "This cluster explores what changed and what stayed the same in Australian society during the war years.",
+      "nodes": [
+        {
+          "title": "Rationing and restrictions",
+          "subtitle": "daily life under pressure",
+          "description": "Government controls affected food, clothing, fuel and ordinary routines across society.",
+          "significance": "This makes the war visible in everyday life, not just in battles and leaders."
+        },
+        {
+          "title": "Propaganda and censorship",
+          "subtitle": "information and persuasion",
+          "description": "Governments used media to influence morale, behaviour and public support for the war effort.",
+          "significance": "This supports discussion of power, persuasion and the shaping of public opinion."
+        },
+        {
+          "title": "Work and industry",
+          "subtitle": "expanded production",
+          "description": "The demands of total war changed employment, manufacturing and expectations of labour.",
+          "significance": "This helps students connect wartime demands to broader economic and social change."
+        },
+        {
+          "title": "Continuity and inequality",
+          "subtitle": "limits of change",
+          "description": "Not all wartime changes were equal or permanent; some patterns of social hierarchy and exclusion remained.",
+          "significance": "This is useful for historical thinking because it resists oversimplified 'war changed everything' narratives."
+        }
+      ]
+    },
+    {
+      "id": "post-war-significance",
+      "title": "Post-war Significance for Australia",
+      "color": "#C96060",
+      "light": "#f5c8c8",
+      "description": "This cluster considers how the war reshaped Australia politically, socially and internationally.",
+      "nodes": [
+        {
+          "title": "Foreign policy shift",
+          "subtitle": "from Britain to the United States",
+          "description": "The war contributed to a major change in Australia’s international relationships and strategic outlook.",
+          "significance": "This is central to understanding long-term national significance rather than only wartime events."
+        },
+        {
+          "title": "National identity",
+          "subtitle": "confidence and independence",
+          "description": "The war influenced how Australians saw their place in the region and in the world.",
+          "significance": "This helps students explore how war can shape identity, memory and political culture."
+        },
+        {
+          "title": "Migration and reconstruction",
+          "subtitle": "post-war rebuilding",
+          "description": "Post-war policies changed population, infrastructure and the long-term shape of Australian society.",
+          "significance": "This links wartime experience to later change, showing that consequences extend beyond 1945."
+        },
+        {
+          "title": "Human rights and global institutions",
+          "subtitle": "wider legacies",
+          "description": "The war contributed to new international efforts around peace, law and human rights.",
+          "significance": "This expands the frame from national significance to global consequence."
+        }
+      ]
+    },
+    {
+      "id": "commemoration-debate",
+      "title": "Commemoration and Debate",
+      "color": "#5F8F8A",
+      "light": "#d2ece8",
+      "description": "This cluster explores how World War II has been remembered, interpreted and debated over time.",
+      "nodes": [
+        {
+          "title": "Memorials and ceremonies",
+          "subtitle": "public remembrance",
+          "description": "Commemoration practices help shape how communities remember sacrifice, service and loss.",
+          "significance": "This allows students to see remembrance as an active process, not just a neutral reflection of the past."
+        },
+        {
+          "title": "Whose stories are told?",
+          "subtitle": "perspective and inclusion",
+          "description": "Historical memory can privilege some voices while overlooking others, including civilians, women and minority groups.",
+          "significance": "This supports perspective-taking and critical discussion about representation."
+        },
+        {
+          "title": "Debates about significance",
+          "subtitle": "history and interpretation",
+          "description": "Historians and the public may disagree about which events, decisions or experiences mattered most.",
+          "significance": "This helps students understand that history involves interpretation as well as evidence."
+        },
+        {
+          "title": "History and national identity",
+          "subtitle": "uses of the past",
+          "description": "Interpretations of World War II can influence ideas about citizenship, patriotism and Australia’s place in the world.",
+          "significance": "This makes the topic relevant to contemporary civic and cultural life."
+        }
+      ]
+    }
+  ]
+}

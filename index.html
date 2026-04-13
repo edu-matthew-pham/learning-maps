@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Learning Maps</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1a1e;
+    --surface: #242428;
+    --surface2: #2e2e32;
+    --text: #f0ede8;
+    --muted: #9a9790;
+    --border: rgba(255,255,255,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; background: var(--bg); overflow: hidden; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+    flex-shrink: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  header h1 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+
+  header .sub {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+.main {
+  display: grid;
+  grid-template-columns: 26% 38% 36%;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+  .cluster-panel,
+  .nodes-panel,
+  .detail-panel {
+    min-height: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cluster-panel {
+    border-right: 1px solid var(--border);
+  }
+
+  .nodes-panel {
+    border-right: 1px solid var(--border);
+  }
+
+  .panel-header {
+    padding: 16px 18px 12px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .panel-kicker {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+
+  .panel-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 16px;
+    line-height: 1.25;
+  }
+
+  .panel-subtitle {
+    margin-top: 6px;
+    font-size: 11.5px;
+    line-height: 1.65;
+    color: var(--muted);
+  }
+
+  .cluster-list,
+  .nodes-list,
+  .detail-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+  }
+
+  .cluster-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cluster-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: transform 0.15s, background 0.15s, border-color 0.15s;
+  }
+
+  .cluster-card:hover {
+    background: rgba(255,255,255,0.03);
+    transform: translateY(-1px);
+  }
+
+  .cluster-card.active {
+    background: rgba(255,255,255,0.04);
+  }
+
+  .cluster-badge,
+  .detail-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    margin-bottom: 7px;
+  }
+
+  .cluster-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 15px;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+
+  .cluster-desc {
+    font-size: 11px;
+    line-height: 1.65;
+    color: var(--muted);
+  }
+
+  .nodes-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    grid-auto-rows: min-content;
+    gap: 10px;
+    align-content: start;
+  }
+
+  .node-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    cursor: pointer;
+    transition: transform 0.15s, background 0.15s, border-color 0.15s;
+  }
+
+  .node-card:hover {
+    background: rgba(255,255,255,0.03);
+    transform: translateY(-1px);
+  }
+
+  .node-card.active {
+    background: rgba(255,255,255,0.05);
+  }
+
+  .node-title {
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.35;
+    margin-bottom: 3px;
+  }
+
+  .node-subtitle {
+    font-size: 11px;
+    font-style: italic;
+    color: var(--muted);
+    margin-bottom: 7px;
+  }
+
+  .node-divider {
+    height: 1px;
+    background: var(--border);
+    margin: 6px 0 8px;
+  }
+
+  .node-desc {
+    font-size: 11px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  .detail-header {
+    padding: 18px 20px 12px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .detail-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 18px;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+
+  .detail-subtitle {
+    font-size: 12px;
+    font-style: italic;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+
+  .detail-section {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 16px;
+  }
+
+  .detail-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .detail-text {
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  .detail-muted {
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+
+  .overview-box {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .overview-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .overview-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .overview-quote {
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--text);
+    font-style: italic;
+    border-left: 2px solid var(--border);
+    padding-left: 10px;
+  }
+
+  .overview-text {
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+
+  .empty-state {
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+
+  .footer-note {
+    flex-shrink: 0;
+    padding: 7px 24px;
+    font-size: 10.5px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+  }
+
+  @media (max-width: 1200px) {
+    .main {
+      grid-template-columns: 300px 1fr 320px;
+    }
+  }
+
+  @media (max-width: 980px) {
+    body {
+      overflow: auto;
+    }
+
+    .main {
+      display: flex;
+      flex-direction: column;
+      overflow: visible;
+    }
+
+    .cluster-panel,
+    .nodes-panel,
+    .detail-panel {
+      min-height: 280px;
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nodes-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1 id="page-title">Learning Maps</h1>
+  <div class="sub" id="page-subtitle"></div>
+</header>
+
+<div class="main">
+  <section class="cluster-panel">
+    <div class="panel-header">
+      <div class="panel-kicker">Clusters</div>
+      <div class="panel-title">Topic Structure</div>
+      <div class="panel-subtitle">Choose a cluster to narrow the topic into a more manageable area.</div>
+    </div>
+    <div class="cluster-list" id="cluster-list"></div>
+  </section>
+
+  <section class="nodes-panel">
+    <div class="panel-header" id="nodes-header"></div>
+    <div class="nodes-list" id="nodes-list"></div>
+  </section>
+
+  <aside class="detail-panel">
+    <div class="detail-header" id="detail-header"></div>
+    <div class="detail-body" id="detail-body"></div>
+  </aside>
+</div>
+
+<div class="footer-note">
+  Minimal PoC for structured topic decomposition using Learning Maps.
+</div>
+
+<script>
+const DATA_URL = './ww2_learning_map.json';
+
+let mapData = null;
+let selectedClusterId = null;
+let selectedNodeIndex = null;
+
+fetch(DATA_URL)
+  .then(r => r.json())
+  .then(data => {
+    mapData = data;
+    initialise();
+  })
+  .catch(err => {
+    console.error(err);
+    document.getElementById('detail-header').innerHTML = `
+      <div class="detail-title">Could not load data</div>
+      <div class="detail-subtitle">Check the JSON filename and file location.</div>
+    `;
+  });
+
+function initialise() {
+  document.getElementById('page-title').textContent = mapData.title || 'Learning Maps';
+  document.getElementById('page-subtitle').textContent = mapData.subtitle || '';
+
+  renderClusters();
+  renderOverviewState();
+}
+
+function renderClusters() {
+  const list = document.getElementById('cluster-list');
+  list.innerHTML = '';
+
+  (mapData.clusters || []).forEach(cluster => {
+    const badgeBg = hexToRgba(cluster.color || '#666666', 0.2);
+    const badgeBorder = hexToRgba(cluster.color || '#666666', 0.4);
+
+    const card = document.createElement('article');
+    card.className = 'cluster-card';
+    card.dataset.clusterId = cluster.id;
+    card.style.borderColor = hexToRgba(cluster.color || '#666666', 0.32);
+
+    card.innerHTML = `
+      <div class="cluster-badge" style="background:${badgeBg}; color:${cluster.light || '#fff'}; border:1px solid ${badgeBorder};">
+        CLUSTER
+      </div>
+      <div class="cluster-title" style="color:${cluster.light || '#fff'}">${cluster.title}</div>
+      <div class="cluster-desc">${cluster.description || ''}</div>
+    `;
+
+    card.addEventListener('click', () => {
+      selectedClusterId = cluster.id;
+      selectedNodeIndex = null;
+      updateActiveClusterCards();
+      renderSelectedCluster();
+      renderClusterDetail(cluster);
+    });
+
+    list.appendChild(card);
+  });
+}
+
+function updateActiveClusterCards() {
+  document.querySelectorAll('.cluster-card').forEach(card => {
+    card.classList.toggle('active', card.dataset.clusterId === selectedClusterId);
+  });
+}
+
+function updateActiveNodeCards() {
+  document.querySelectorAll('.node-card').forEach(card => {
+    const isActive =
+      card.dataset.clusterId === selectedClusterId &&
+      Number(card.dataset.nodeIndex) === selectedNodeIndex;
+    card.classList.toggle('active', isActive);
+  });
+}
+
+function renderOverviewState() {
+  selectedClusterId = null;
+  selectedNodeIndex = null;
+  updateActiveClusterCards();
+  renderNodesOverview();
+  renderOverviewDetail();
+}
+
+function renderNodesOverview() {
+  document.getElementById('nodes-header').innerHTML = `
+    <div class="panel-kicker">Overview</div>
+    <div class="panel-title">${mapData.overview?.title || mapData.title}</div>
+    <div class="panel-subtitle">${mapData.overview?.description || ''}</div>
+  `;
+
+  const nodesList = document.getElementById('nodes-list');
+  nodesList.innerHTML = '';
+
+  (mapData.clusters || []).forEach(cluster => {
+    const card = document.createElement('article');
+    card.className = 'node-card';
+    card.style.borderColor = hexToRgba(cluster.color || '#666666', 0.28);
+    card.innerHTML = `
+      <div class="node-title" style="color:${cluster.light || '#fff'}">${cluster.title}</div>
+      <div class="node-subtitle">cluster overview</div>
+      <div class="node-divider"></div>
+      <div class="node-desc">${cluster.description || ''}</div>
+    `;
+    card.addEventListener('click', () => {
+      selectedClusterId = cluster.id;
+      selectedNodeIndex = null;
+      updateActiveClusterCards();
+      renderSelectedCluster();
+      renderClusterDetail(cluster);
+    });
+    nodesList.appendChild(card);
+  });
+}
+
+function renderSelectedCluster() {
+  const cluster = getSelectedCluster();
+  const nodesHeader = document.getElementById('nodes-header');
+  const nodesList = document.getElementById('nodes-list');
+
+  if (!cluster) {
+    renderNodesOverview();
+    return;
+  }
+
+  nodesHeader.innerHTML = `
+    <div class="panel-kicker">Selected Cluster</div>
+    <div class="panel-title">${cluster.title}</div>
+    <div class="panel-subtitle">${cluster.description || ''}</div>
+  `;
+
+  nodesList.innerHTML = '';
+
+  (cluster.nodes || []).forEach((node, index) => {
+    const card = document.createElement('article');
+    card.className = 'node-card';
+    card.dataset.clusterId = cluster.id;
+    card.dataset.nodeIndex = index;
+    card.style.borderColor = hexToRgba(cluster.color || '#666666', 0.32);
+
+    card.innerHTML = `
+      <div class="node-title" style="color:${cluster.light || '#fff'}">${node.title}</div>
+      <div class="node-subtitle">${node.subtitle || ''}</div>
+      <div class="node-divider"></div>
+      <div class="node-desc">${node.description || ''}</div>
+    `;
+
+    card.addEventListener('click', () => {
+      selectedNodeIndex = index;
+      updateActiveNodeCards();
+      renderNodeDetail(cluster, node);
+    });
+
+    nodesList.appendChild(card);
+  });
+
+  updateActiveNodeCards();
+}
+
+function renderOverviewDetail() {
+  document.getElementById('detail-header').innerHTML = `
+    <div class="detail-title">${mapData.overview?.title || mapData.title}</div>
+    <div class="detail-subtitle">${mapData.overview?.description || ''}</div>
+  `;
+
+  const body = document.getElementById('detail-body');
+  body.innerHTML = '';
+
+  const box = document.createElement('div');
+  box.className = 'overview-box';
+
+  (mapData.overview?.sections || []).forEach(section => {
+    const sec = document.createElement('div');
+    sec.className = 'overview-section';
+
+    if (section.title) {
+      const title = document.createElement('div');
+      title.className = 'overview-title';
+      title.textContent = section.title;
+      sec.appendChild(title);
+    }
+
+    if (section.quote) {
+      const quote = document.createElement('div');
+      quote.className = 'overview-quote';
+      quote.textContent = section.quote;
+      sec.appendChild(quote);
+    }
+
+    if (section.text) {
+      const text = document.createElement('div');
+      text.className = 'overview-text';
+      text.textContent = section.text;
+      sec.appendChild(text);
+    }
+
+    box.appendChild(sec);
+  });
+
+  body.appendChild(box);
+}
+
+function renderClusterDetail(cluster) {
+  const badgeBg = hexToRgba(cluster.color || '#666666', 0.2);
+  const badgeBorder = hexToRgba(cluster.color || '#666666', 0.4);
+
+  document.getElementById('detail-header').innerHTML = `
+    <div class="detail-badge" style="background:${badgeBg}; color:${cluster.light || '#fff'}; border:1px solid ${badgeBorder};">
+      Cluster
+    </div>
+    <div class="detail-title" style="color:${cluster.light || '#fff'}">${cluster.title}</div>
+    <div class="detail-subtitle">${cluster.description || ''}</div>
+  `;
+
+  const body = document.getElementById('detail-body');
+  body.innerHTML = `
+    <div class="detail-section">
+      <div class="detail-label">Focus</div>
+      <div class="detail-text">${cluster.description || ''}</div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-label">Included nodes</div>
+      <div class="detail-muted">${(cluster.nodes || []).map(n => n.title).join(' • ')}</div>
+    </div>
+  `;
+}
+
+function renderNodeDetail(cluster, node) {
+  const badgeBg = hexToRgba(cluster.color || '#666666', 0.2);
+  const badgeBorder = hexToRgba(cluster.color || '#666666', 0.4);
+
+  document.getElementById('detail-header').innerHTML = `
+    <div class="detail-badge" style="background:${badgeBg}; color:${cluster.light || '#fff'}; border:1px solid ${badgeBorder};">
+      ${cluster.title}
+    </div>
+    <div class="detail-title" style="color:${cluster.light || '#fff'}">${node.title}</div>
+    <div class="detail-subtitle">${node.subtitle || ''}</div>
+  `;
+
+  const body = document.getElementById('detail-body');
+  body.innerHTML = `
+    <div class="detail-section">
+      <div class="detail-label">Description</div>
+      <div class="detail-text">${node.description || ''}</div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-label">Why this matters</div>
+      <div class="detail-muted">${node.significance || ''}</div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-label">Cluster context</div>
+      <div class="detail-muted">${cluster.description || ''}</div>
+    </div>
+  `;
+}
+
+function getSelectedCluster() {
+  return (mapData.clusters || []).find(c => c.id === selectedClusterId) || null;
+}
+
+function hexToRgba(hex, alpha) {
+  const clean = hex.replace('#', '');
+  const bigint = parseInt(clean, 16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+</script>
+
+</body>
+</html>
