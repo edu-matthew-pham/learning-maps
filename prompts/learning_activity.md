@@ -12,6 +12,8 @@ IMPORTANT RULES:
 
 ---
 
+{{widthCoachInstruction}}
+
 ## Learning Modes
 
 You can guide me in two modes:

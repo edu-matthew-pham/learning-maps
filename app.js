@@ -107,13 +107,20 @@ function setupUI() {
     const yearLevel = document.getElementById('year-input').value;
     const inquiryQuestion = document.getElementById('inquiry-input').value;
 
-    const prompt = await generateTopicPrompt({ topic, yearLevel, inquiryQuestion, schema });
-    document.getElementById('prompt-output').value = prompt;
+    const widthMode = document.getElementById('width-mode').value;
+    const prompt = await generateTopicPrompt({ topic, yearLevel, inquiryQuestion, schema, widthMode });
+    const output = document.getElementById('prompt-output');
+    output.value = prompt;
+    const copyBtn = document.getElementById('copy-btn');
+    copyBtn.disabled = false;
+    copyBtn.style.opacity = '1';
+    copyBtn.style.cursor = 'pointer';
   });
 
   // Copy prompt output
   document.getElementById('copy-btn').addEventListener('click', () => {
-    navigator.clipboard.writeText(document.getElementById('prompt-output').value);
+    const text = document.getElementById('prompt-output').value;
+    if (text) navigator.clipboard.writeText(text);
   });
 
   // Load map from pasted JSON
@@ -178,7 +185,8 @@ function setupUI() {
       alert('No topic loaded yet.');
       return;
     }
-    const prompt = await generateLearningActivityPrompt(mapData);
+    const widthMode = document.getElementById('coaching-width-mode')?.value || 'typical';
+    const prompt = await generateLearningActivityPrompt(mapData, widthMode);
     await navigator.clipboard.writeText(prompt);
     window.goatcounter?.count({ path: 'learning-prompt-copied', title: 'Learning Activity Prompt copied' });
     alert('Learning Activity Prompt copied to clipboard.');
