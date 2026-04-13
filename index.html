@@ -461,6 +461,7 @@
 <header>
   <h1 id="page-title">Learning Maps</h1>
   <div class="sub" id="page-subtitle"></div>
+  <button id="open-prompt-btn">Prompt Generator</button>
 </header>
 
 <div class="main">
@@ -480,7 +481,24 @@
 
   <aside class="detail-panel">
     <div class="detail-header" id="detail-header"></div>
-    <div class="detail-body" id="detail-body"></div>
+    <div class="detail-body" id="detail-body">
+    </div>
+    <div id="prompt-generator" style="display:none; padding:12px;">
+        <div style="font-size:12px; margin-bottom:6px;">Topic</div>
+        <input id="topic-input" type="text" placeholder="e.g. World War II"
+            style="width:100%; margin-bottom:10px; padding:6px;" />
+
+        <div style="font-size:12px; margin-bottom:6px;">Year Level</div>
+        <input id="year-input" type="text" placeholder="e.g. Year 10"
+            style="width:100%; margin-bottom:10px; padding:6px;" />
+
+        <button id="generate-btn" style="margin-bottom:10px;">
+            Generate Prompt
+        </button>
+
+        <textarea id="prompt-output"
+            style="width:100%; height:200px; font-size:11px;"></textarea>
+    </div>
   </aside>
 </div>
 
@@ -497,6 +515,15 @@ let mapData = null;
 let selectedClusterId = null;
 let selectedNodeIndex = null;
 
+let schema = null;
+
+fetch('./learning_map_schema.json')
+  .then(r => r.json())
+  .then(data => {
+    schema = data;
+    setupUI();
+  });
+
 fetch(DATA_URL)
   .then(r => r.json())
   .then(data => {
@@ -510,6 +537,21 @@ fetch(DATA_URL)
       <div class="detail-subtitle">Check the JSON filename and file location.</div>
     `;
   });
+
+function setupUI() {
+    document.getElementById('generate-btn').addEventListener('click', () => {
+  const topic = document.getElementById('topic-input').value;
+  const year = document.getElementById('year-input').value;
+
+  const prompt = generatePrompt({ topic, yearLevel: year });
+  document.getElementById('prompt-output').value = prompt;
+});
+
+document.getElementById('open-prompt-btn').addEventListener('click', () => {
+  const panel = document.getElementById('prompt-generator');
+  panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+});
+}
 
 function initialise() {
   document.getElementById('page-title').textContent = mapData.title || 'Learning Maps';
@@ -941,6 +983,31 @@ function escapeHtml(str) {
     .replaceAll('"', '&quot;')
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;');
+}
+
+function generatePrompt({ topic, yearLevel }) {
+ if (!schema) return "Schema not loaded yet.";
+
+  return `
+You are generating a structured Learning Map.
+
+Topic: ${topic}
+Audience: ${yearLevel}
+
+Follow this JSON schema exactly:
+${JSON.stringify(schema, null, 2)}
+
+Rules:
+- Output valid JSON only
+- Do not include explanations
+- Use only these content block types: image, quote, text, timeline
+- 4–6 clusters
+- 3–4 nodes per cluster
+- Keep descriptions concise
+- Use timelines only when helpful
+
+Return only the JSON object.
+`;
 }
 </script>
 

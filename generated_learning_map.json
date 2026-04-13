@@ -1,0 +1,242 @@
+{
+  "title": "World War II",
+  "subtitle": "A Global Conflict and Its Lasting Impact",
+  "overview": {
+    "title": "Understanding World War II",
+    "description": "World War II was a global conflict fought between 1939 and 1945 that reshaped nations, societies, and international relations.",
+    "sections": [
+      {
+        "title": "Global Scale",
+        "text": "The war involved many of the world’s nations across Europe, Asia, Africa, and the Pacific."
+      },
+      {
+        "title": "Human Cost",
+        "text": "World War II caused unprecedented destruction and loss of life, including the Holocaust."
+      },
+      {
+        "title": "Legacy",
+        "text": "The war led to major political changes and the creation of international organisations such as the United Nations."
+      }
+    ]
+  },
+  "clusters": [
+    {
+      "id": "c1",
+      "title": "Causes of the War",
+      "color": "#8B0000",
+      "light": "#F4C2C2",
+      "description": "Factors that led to the outbreak of World War II.",
+      "nodes": [
+        {
+          "title": "Treaty of Versailles",
+          "subtitle": "Aftermath of World War I",
+          "description": "Harsh terms imposed on Germany created resentment and instability.",
+          "content": [
+            {
+              "type": "text",
+              "text": "The treaty punished Germany with territorial losses, military limits, and heavy reparations."
+            }
+          ]
+        },
+        {
+          "title": "Rise of Dictators",
+          "subtitle": "Authoritarian leaders",
+          "description": "Leaders like Hitler, Mussolini, and Tojo pursued aggressive expansion.",
+          "content": [
+            {
+              "type": "text",
+              "text": "These leaders used nationalism and propaganda to gain support."
+            }
+          ]
+        },
+        {
+          "title": "Failure of Appeasement",
+          "subtitle": "Weak international response",
+          "description": "Western powers failed to stop early aggression.",
+          "content": [
+            {
+              "type": "quote",
+              "text": "Peace for our time.",
+              "source": "Neville Chamberlain, 1938"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c2",
+      "title": "Major Powers and Alliances",
+      "color": "#003366",
+      "light": "#C7D8EB",
+      "description": "Nations involved and their alliances.",
+      "nodes": [
+        {
+          "title": "Axis Powers",
+          "subtitle": "Germany, Italy, Japan",
+          "description": "Countries seeking territorial expansion.",
+          "content": [
+            {
+              "type": "text",
+              "text": "The Axis aimed to dominate Europe and Asia."
+            }
+          ]
+        },
+        {
+          "title": "Allied Powers",
+          "subtitle": "UK, USA, USSR and others",
+          "description": "Countries united to defeat the Axis.",
+          "content": [
+            {
+              "type": "text",
+              "text": "Allies combined military and industrial strength."
+            }
+          ]
+        },
+        {
+          "title": "Australia’s Role",
+          "subtitle": "Fighting overseas",
+          "description": "Australia supported Britain and later the USA.",
+          "content": [
+            {
+              "type": "text",
+              "text": "Australian troops fought in Europe, North Africa, and the Pacific."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c3",
+      "title": "Key Events and Turning Points",
+      "color": "#2F4F4F",
+      "light": "#D3E0E0",
+      "description": "Events that shaped the outcome of the war.",
+      "nodes": [
+        {
+          "title": "Invasion of Poland",
+          "subtitle": "War begins",
+          "description": "Germany invaded Poland in 1939.",
+          "content": [
+            {
+              "type": "timeline",
+              "items": [
+                {
+                  "label": "1939",
+                  "title": "Poland Invaded",
+                  "text": "Britain and France declared war on Germany."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Pearl Harbor",
+          "subtitle": "USA enters war",
+          "description": "Japanese attack on a US naval base.",
+          "content": [
+            {
+              "type": "text",
+              "text": "The attack led to the United States joining the war."
+            }
+          ]
+        },
+        {
+          "title": "D-Day",
+          "subtitle": "Allied invasion",
+          "description": "The liberation of Western Europe began.",
+          "content": [
+            {
+              "type": "text",
+              "text": "Allied forces landed in Normandy on 6 June 1944."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c4",
+      "title": "The Holocaust",
+      "color": "#4B0082",
+      "light": "#E2D7F2",
+      "description": "Systematic persecution and genocide by Nazi Germany.",
+      "nodes": [
+        {
+          "title": "Nazi Ideology",
+          "subtitle": "Racism and antisemitism",
+          "description": "Belief in racial superiority drove persecution.",
+          "content": [
+            {
+              "type": "text",
+              "text": "Jews and other groups were blamed for Germany’s problems."
+            }
+          ]
+        },
+        {
+          "title": "Concentration Camps",
+          "subtitle": "Imprisonment and forced labour",
+          "description": "Millions were detained under brutal conditions.",
+          "content": [
+            {
+              "type": "text",
+              "text": "Camps operated across occupied Europe."
+            }
+          ]
+        },
+        {
+          "title": "Genocide",
+          "subtitle": "Mass murder",
+          "description": "Approximately six million Jews were killed.",
+          "content": [
+            {
+              "type": "quote",
+              "text": "Never forget.",
+              "source": "Holocaust remembrance phrase"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c5",
+      "title": "End of the War and Legacy",
+      "color": "#006400",
+      "light": "#CFE8CF",
+      "description": "How the war ended and its consequences.",
+      "nodes": [
+        {
+          "title": "Defeat of Germany",
+          "subtitle": "1945",
+          "description": "Germany surrendered after Allied advances.",
+          "content": [
+            {
+              "type": "text",
+              "text": "Berlin fell to Soviet forces in May 1945."
+            }
+          ]
+        },
+        {
+          "title": "Atomic Bombings",
+          "subtitle": "Hiroshima and Nagasaki",
+          "description": "Japan surrendered after atomic attacks.",
+          "content": [
+            {
+              "type": "text",
+              "text": "These bombings caused massive destruction and loss of life."
+            }
+          ]
+        },
+        {
+          "title": "Post-war World",
+          "subtitle": "Rebuilding and change",
+          "description": "New global systems aimed to prevent future wars.",
+          "content": [
+            {
+              "type": "text",
+              "text": "The United Nations was formed to promote peace."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

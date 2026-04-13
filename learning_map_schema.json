@@ -1,0 +1,129 @@
+{
+  "type": "object",
+  "required": ["title", "subtitle", "overview", "clusters"],
+  "properties": {
+    "title": { "type": "string" },
+    "subtitle": { "type": "string" },
+    "overview": {
+      "type": "object",
+      "required": ["title", "description", "sections"],
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "sections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["title"],
+            "properties": {
+              "title": { "type": "string" },
+              "text": { "type": "string" },
+              "quote": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "clusters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "color", "light", "description", "nodes"],
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "color": { "type": "string" },
+          "light": { "type": "string" },
+          "description": { "type": "string" },
+          "nodes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["title", "subtitle", "description"],
+              "properties": {
+                "title": { "type": "string" },
+                "subtitle": { "type": "string" },
+                "description": { "type": "string" },
+                "significance": { "type": "string" },
+                "content": {
+                  "type": "array",
+                  "items": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "required": ["type", "src"],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": ["image"]
+                          },
+                          "src": { "type": "string" },
+                          "caption": { "type": "string" }
+                        },
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "required": ["type", "text"],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": ["quote"]
+                          },
+                          "text": { "type": "string" },
+                          "source": { "type": "string" }
+                        },
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "required": ["type", "text"],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": ["text"]
+                          },
+                          "text": { "type": "string" }
+                        },
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "required": ["type", "items"],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": ["timeline"]
+                          },
+                          "items": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "required": ["label", "title", "text"],
+                              "properties": {
+                                "label": { "type": "string" },
+                                "title": { "type": "string" },
+                                "text": { "type": "string" }
+                              },
+                              "additionalProperties": false
+                            }
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
