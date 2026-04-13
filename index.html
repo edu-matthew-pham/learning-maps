@@ -462,6 +462,9 @@
   <h1 id="page-title">Topic Exploration</h1>
   <div class="sub" id="page-subtitle"></div>
   <button id="open-prompt-btn">New Topic</button>
+  <button id="open-learning-prompt-btn">Learning Activity Prompt</button>
+  
+  
 </header>
 
 <div class="main">
@@ -499,6 +502,7 @@
         style="width:100%; margin-bottom:10px; padding:6px;" />
 
         <button id="generate-btn" style="margin-bottom:10px;">Generate Prompt</button>
+        
 
         <div style="font-size:12px; margin-bottom:6px;">Prompt Output</div>
         <div style="position:relative;">
@@ -543,26 +547,31 @@ let selectedNodeIndex = null;
 
 let schema = null;
 
-fetch('./learning_map_schema.json')
-  .then(r => r.json())
-  .then(data => {
-    schema = data;
-    setupUI();
-  });
+boot();
 
-fetch(DATA_URL)
-  .then(r => r.json())
-  .then(data => {
-    mapData = data;
+async function boot() {
+  try {
+    const schemaRes = await fetch('./learning_map_schema.json');
+    schema = await schemaRes.json();
+
+    const mapRes = await fetch(DATA_URL);
+    mapData = await mapRes.json();
+
     initialise();
-  })
-  .catch(err => {
+    setupUI();
+
+  } catch (err) {
     console.error(err);
+
     document.getElementById('detail-header').innerHTML = `
       <div class="detail-title">Could not load data</div>
       <div class="detail-subtitle">Check the JSON filename and file location.</div>
     `;
-  });
+  }
+}
+
+
+
 
 function hidePromptGenerator() {
   document.getElementById('prompt-generator').style.display = 'none';
@@ -570,21 +579,26 @@ function hidePromptGenerator() {
 
 function setupUI() {
     document.getElementById('generate-btn').addEventListener('click', () => {
-  const topic = document.getElementById('topic-input').value;
-  const year = document.getElementById('year-input').value;
-  const inquiry = document.getElementById('inquiry-input').value;
+        const topic = document.getElementById('topic-input').value;
+        const year = document.getElementById('year-input').value;
+        const inquiry = document.getElementById('inquiry-input').value;
 
-  const prompt = generatePrompt({
-  topic,
-  inquiryQuestion: inquiry,
-  yearLevel: year
-});
+        const prompt = generatePrompt({
+        topic,
+        inquiryQuestion: inquiry,
+        yearLevel: year
+    });
+
+
+
   document.getElementById('prompt-output').value = prompt;
 
   document.getElementById('copy-btn').addEventListener('click', () => {
   const text = document.getElementById('prompt-output').value;
   navigator.clipboard.writeText(text);
 });
+
+  
 });
 
 document.getElementById('open-prompt-btn').addEventListener('click', () => {
@@ -609,6 +623,22 @@ document.getElementById('load-map-btn').addEventListener('click', () => {
     console.error(err);
   }
 });
+
+document.getElementById('open-learning-prompt-btn').addEventListener('click', () => {
+
+  if (!mapData) {
+    alert("No topic loaded yet.");
+    return;
+  }
+
+  const prompt = generateLearningActivityPrompt(mapData);
+
+  navigator.clipboard.writeText(prompt);
+
+  alert("Learning Activity Prompt copied to clipboard");
+});
+
+
 }
 
 function initialise() {
@@ -1136,6 +1166,99 @@ CRITICAL OUTPUT RULES:
 - Return ONLY the JSON object
 `;
 }
+
+function generateLearningActivityPrompt(mapData) {
+  return `
+You are my learning coach.
+
+You are guiding me through a structured Topic Explorer.
+
+IMPORTANT RULES:
+- You MUST only use the provided Topic Explorer structure.
+- Do NOT introduce external facts or content.
+- Do NOT rewrite or regenerate the structure.
+- Your role is to guide thinking, not give full answers immediately.
+- Use questions, hints, and short explanations.
+
+## HARD CONSTRAINT (SYSTEM BOUNDARY)
+
+If the user asks anything that is NOT explicitly contained in the Topic Explorer structure:
+
+- Do NOT answer the question
+- Do NOT provide external knowledge
+- Do NOT generate factual content outside the structure
+- Do NOT use general world knowledge
+
+Instead, you MUST do ONE of the following:
+1. Tell the user the request is outside the Topic Explorer structure
+2. Ask them to relate it back to a cluster or node
+3. Offer to return to structured exploration mode
+4. Offer to switch to a new Topic Explorer (reset context)
+
+You MUST NOT continue the conversation as a general AI assistant.
+
+---
+
+## Learning Modes
+
+You can guide me in two modes:
+
+### discover
+- Help me explore ideas and relationships
+- Ask open-ended thinking questions
+- Encourage connections between clusters and nodes
+
+### practice
+- Give small tasks or application questions
+- Help me apply ideas from the structure
+- Break tasks into simple steps
+
+---
+
+## How you should respond
+
+- Start with small, manageable steps
+- Ask me what I notice or think first
+- Build understanding gradually
+- Check understanding often
+- Encourage reflection and explanation
+
+---
+
+## Available Commands I can use
+
+- next → move forward
+- quiz → give me a challenge
+- explain → simplify a concept
+- reflect → summarise what I know
+- ask → let me ask my own question
+- switch → change between discover/practice
+
+---
+
+## Topic Explorer Structure (source of truth)
+
+You MUST use ONLY this structure:
+
+${JSON.stringify(mapData, null, 2)}
+
+---
+
+## Your Task
+
+Guide me through this topic using inquiry-based learning.
+
+Help me:
+- understand key concepts in clusters and nodes
+- see relationships between ideas
+- develop deeper explanations over time
+- apply knowledge in small steps
+
+Do not go outside the structure.
+`;
+}
+
+
 </script>
 
 </body>
