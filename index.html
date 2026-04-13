@@ -493,6 +493,11 @@
         <input id="year-input" type="text" placeholder="e.g. Year 10"
             style="width:100%; margin-bottom:10px; padding:6px;" />
 
+        <div style="font-size:12px; margin-bottom:6px;">Inquiry Question (optional)</div>
+        <input id="inquiry-input" type="text"
+        placeholder="e.g. To what extent was WWII inevitable?"
+        style="width:100%; margin-bottom:10px; padding:6px;" />
+
         <button id="generate-btn" style="margin-bottom:10px;">Generate Prompt</button>
 
         <div style="font-size:12px; margin-bottom:6px;">Prompt Output</div>
@@ -567,8 +572,13 @@ function setupUI() {
     document.getElementById('generate-btn').addEventListener('click', () => {
   const topic = document.getElementById('topic-input').value;
   const year = document.getElementById('year-input').value;
+  const inquiry = document.getElementById('inquiry-input').value;
 
-  const prompt = generatePrompt({ topic, yearLevel: year });
+  const prompt = generatePrompt({
+  topic,
+  inquiryQuestion: inquiry,
+  yearLevel: year
+});
   document.getElementById('prompt-output').value = prompt;
 
   document.getElementById('copy-btn').addEventListener('click', () => {
@@ -1069,26 +1079,35 @@ function escapeHtml(str) {
     .replaceAll('>', '&gt;');
 }
 
-function generatePrompt({ topic, yearLevel }) {
+function generatePrompt({ topic, inquiryQuestion, yearLevel }) {
  if (!schema) return "Schema not loaded yet.";
 
   return `
-You are generating a structured Learning Map.
+You are generating a structured Learning Map for education.
 
 Topic: ${topic}
 Audience: ${yearLevel}
 
+${inquiryQuestion ? `Inquiry Question: ${inquiryQuestion}` : `
+No inquiry question provided. Create a meaningful guiding inquiry question that encourages historical thinking, causation, significance, or interpretation.`}
+
 Follow this JSON schema exactly:
 ${JSON.stringify(schema, null, 2)}
 
-Rules:
+CRITICAL INSTRUCTIONS:
 - Output valid JSON only
 - Do not include explanations
-- Use only these content block types: image, quote, text, timeline
-- 4–6 clusters
+- Ensure clusters reflect conceptual structure, not just subtopics
+- 4–6 clusters maximum
 - 3–4 nodes per cluster
-- Keep descriptions concise
-- Use timelines only when helpful
+- Nodes should include explanatory depth, not just definitions
+- Use timelines only where chronological understanding is essential
+- At least 1 cluster should engage with interpretation or significance if appropriate
+
+CONTENT STYLE:
+- Write for Year Level: ${yearLevel}
+- Prefer analytical over descriptive framing
+- Where possible, connect causes → events → consequences → significance
 
 Return only the JSON object.
 `;
