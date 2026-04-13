@@ -138,6 +138,37 @@ function setupUI() {
     startPresentation(mapData);
   });
 
+  // Export JSON — prompts for filename then downloads
+  document.getElementById('export-map-btn').addEventListener('click', () => {
+    const raw = document.getElementById('json-input').value.trim();
+    if (!raw) { alert('No JSON to export. Generate or paste a topic first.'); return; }
+    const suggested = (mapData?.title || 'topic').toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    const filename = window.prompt('Export filename:', suggested);
+    if (!filename) return;
+    const blob = new Blob([raw], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename.endsWith('.json') ? filename : filename + '.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  // Import JSON — file picker populates the textarea
+  document.getElementById('import-map-btn').addEventListener('click', () => {
+    document.getElementById('import-file-input').click();
+  });
+
+  document.getElementById('import-file-input').addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      document.getElementById('json-input').value = ev.target.result;
+    };
+    reader.readAsText(file);
+    e.target.value = ''; // reset so same file can be re-imported
+  });
+
   // Copy learning activity prompt to clipboard
   document.getElementById('open-learning-prompt-btn').addEventListener('click', async () => {
     if (!mapData) {
