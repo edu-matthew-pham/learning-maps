@@ -4,6 +4,16 @@
   "properties": {
     "title": { "type": "string" },
     "subtitle": { "type": "string" },
+    "journey": {
+        "type": "object",
+        "required": ["title", "text"],
+        "properties": {
+            "title": { "type": "string" },
+            "text": { "type": "string" },
+            "guidance": { "type": "string" }
+        },
+        "additionalProperties": false
+    },
     "overview": {
       "type": "object",
       "required": ["title", "description", "sections"],

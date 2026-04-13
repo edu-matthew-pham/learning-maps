@@ -1,6 +1,11 @@
 {
   "title": "World War II",
   "subtitle": "Year 10 Learning Map",
+  "journey": {
+    "title": "Inquiry Challenge",
+    "text": "To what extent was World War II caused by unresolved tensions from World War I?",
+    "guidance": "Use the map to explore causes, turning points, and consequences to build your response."
+  },
   "overview": {
     "title": "World War II Overview",
     "description": "Select a cluster to explore a key dimension of World War II, then choose a node to examine a more focused idea.",
