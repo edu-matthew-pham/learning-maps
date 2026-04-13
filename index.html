@@ -47,13 +47,14 @@
     color: var(--muted);
   }
 
-.main {
-  display: grid;
-  grid-template-columns: 26% 38% 36%;
-  flex: 1;
-  min-height: 0;
-  overflow: hidden;
-}
+  .main {
+    display: grid;
+    grid-template-columns: 20fr 35fr 45fr;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+
   .cluster-panel,
   .nodes-panel,
   .detail-panel {
@@ -128,7 +129,7 @@
   }
 
   .cluster-card.active {
-    background: rgba(255,255,255,0.04);
+    background: rgba(255,255,255,0.045);
   }
 
   .cluster-badge,
@@ -178,7 +179,7 @@
   }
 
   .node-card.active {
-    background: rgba(255,255,255,0.05);
+    background: rgba(255,255,255,0.055);
   }
 
   .node-title {
@@ -231,7 +232,7 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
-    margin-bottom: 16px;
+    margin-bottom: 18px;
   }
 
   .detail-label {
@@ -244,13 +245,13 @@
 
   .detail-text {
     font-size: 12px;
-    line-height: 1.7;
+    line-height: 1.75;
     color: var(--text);
   }
 
   .detail-muted {
     font-size: 12px;
-    line-height: 1.7;
+    line-height: 1.75;
     color: var(--muted);
   }
 
@@ -287,6 +288,57 @@
     color: var(--muted);
   }
 
+  .content-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .content-block + .content-block {
+    margin-top: 10px;
+  }
+
+  .content-image {
+    width: 100%;
+    display: block;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    background: var(--surface2);
+  }
+
+  .content-caption {
+    padding: 10px 12px;
+    font-size: 11px;
+    line-height: 1.55;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+
+  .content-quote {
+    padding: 14px 14px 12px;
+  }
+
+  .content-quote-text {
+    font-size: 12px;
+    line-height: 1.75;
+    color: var(--text);
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+
+  .content-quote-source {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .content-text {
+    padding: 12px 14px;
+    font-size: 12px;
+    line-height: 1.75;
+    color: var(--muted);
+  }
+
   .empty-state {
     font-size: 12px;
     line-height: 1.7;
@@ -304,7 +356,7 @@
 
   @media (max-width: 1200px) {
     .main {
-      grid-template-columns: 300px 1fr 320px;
+      grid-template-columns: 18fr 34fr 48fr;
     }
   }
 
@@ -606,20 +658,81 @@ function renderNodeDetail(cluster, node) {
   `;
 
   const body = document.getElementById('detail-body');
-  body.innerHTML = `
-    <div class="detail-section">
-      <div class="detail-label">Description</div>
-      <div class="detail-text">${node.description || ''}</div>
-    </div>
-    <div class="detail-section">
-      <div class="detail-label">Why this matters</div>
-      <div class="detail-muted">${node.significance || ''}</div>
-    </div>
-    <div class="detail-section">
-      <div class="detail-label">Cluster context</div>
-      <div class="detail-muted">${cluster.description || ''}</div>
-    </div>
-  `;
+  body.innerHTML = '';
+
+  body.appendChild(makeSection('Description', node.description || '', false));
+
+  if (node.content && node.content.length) {
+    const contentSection = document.createElement('div');
+    contentSection.className = 'detail-section';
+
+    const label = document.createElement('div');
+    label.className = 'detail-label';
+    label.textContent = 'Content';
+    contentSection.appendChild(label);
+
+    const wrap = document.createElement('div');
+    node.content.forEach(block => {
+      wrap.appendChild(renderContentBlock(block));
+    });
+
+    contentSection.appendChild(wrap);
+    body.appendChild(contentSection);
+  }
+
+  if (node.significance) {
+    body.appendChild(makeSection('Why this matters', node.significance, true));
+  }
+
+  body.appendChild(makeSection('Cluster context', cluster.description || '', true));
+}
+
+function renderContentBlock(block) {
+  const el = document.createElement('div');
+  el.className = 'content-block';
+
+  if (block.type === 'image') {
+    el.innerHTML = `
+      <img class="content-image" src="${block.src || ''}" alt="${escapeHtml(block.caption || '')}">
+      ${block.caption ? `<div class="content-caption">${block.caption}</div>` : ''}
+    `;
+    return el;
+  }
+
+  if (block.type === 'quote') {
+    el.innerHTML = `
+      <div class="content-quote">
+        <div class="content-quote-text">“${block.text || ''}”</div>
+        ${block.source ? `<div class="content-quote-source">${block.source}</div>` : ''}
+      </div>
+    `;
+    return el;
+  }
+
+  if (block.type === 'text') {
+    el.innerHTML = `<div class="content-text">${block.text || ''}</div>`;
+    return el;
+  }
+
+  el.innerHTML = `<div class="content-text">Unsupported content block type.</div>`;
+  return el;
+}
+
+function makeSection(labelText, contentText, muted = false) {
+  const section = document.createElement('div');
+  section.className = 'detail-section';
+
+  const label = document.createElement('div');
+  label.className = 'detail-label';
+  label.textContent = labelText;
+
+  const content = document.createElement('div');
+  content.className = muted ? 'detail-muted' : 'detail-text';
+  content.textContent = contentText;
+
+  section.appendChild(label);
+  section.appendChild(content);
+  return section;
 }
 
 function getSelectedCluster() {
@@ -633,6 +746,14 @@ function hexToRgba(hex, alpha) {
   const g = (bigint >> 8) & 255;
   const b = bigint & 255;
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replaceAll('&', '&amp;')
+    .replaceAll('"', '&quot;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;');
 }
 </script>
 

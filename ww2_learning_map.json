@@ -27,13 +27,32 @@
           "title": "Treaty of Versailles",
           "subtitle": "aftermath of World War I",
           "description": "The Treaty of Versailles imposed harsh penalties on Germany, contributing to resentment, instability and later political extremism.",
-          "significance": "This node helps students connect the end of one war to the causes of another, showing how unresolved tensions can shape future conflict."
+          "significance": "This node helps students connect the end of one war to the causes of another, showing how unresolved tensions can shape future conflict.",
+          "content": [
+            {
+              "type": "image",
+              "src": "https://picsum.photos/seed/versailles/640/360",
+              "caption": "Placeholder image for the Treaty of Versailles."
+            },
+            {
+              "type": "quote",
+              "text": "The peace settlement after World War I became part of the story of how a later conflict emerged.",
+              "source": "Draft learning note"
+            }
+          ]
         },
         {
           "title": "Rise of dictators",
           "subtitle": "Germany, Italy and Japan",
           "description": "Authoritarian leaders promoted nationalism, militarism and expansion, increasing international tension.",
-          "significance": "This highlights how leadership, ideology and political systems influenced the path to war."
+          "significance": "This highlights how leadership, ideology and political systems influenced the path to war.",
+          "content": [
+            {
+              "type": "image",
+              "src": "https://picsum.photos/seed/dictators/640/360",
+              "caption": "Placeholder image for authoritarian leadership and propaganda."
+            }
+          ]
         },
         {
           "title": "Failure of collective security",
@@ -45,7 +64,19 @@
           "title": "Appeasement",
           "subtitle": "responses of Britain and France",
           "description": "Some governments tried to avoid war by making concessions, a policy that remains debated by historians.",
-          "significance": "This node opens up interpretation and debate, not just factual recall."
+          "significance": "This node opens up interpretation and debate, not just factual recall.",
+          "content": [
+            {
+              "type": "image",
+              "src": "https://picsum.photos/seed/appeasement/640/360",
+              "caption": "Placeholder image for appeasement and diplomatic negotiation."
+            },
+            {
+              "type": "quote",
+              "text": "Appeasement is often discussed not just as a decision, but as a historical debate.",
+              "source": "Draft learning note"
+            }
+          ]
         }
       ]
     },
@@ -66,7 +97,14 @@
           "title": "The war in the Pacific",
           "subtitle": "regional threat and strategy",
           "description": "The Pacific War brought the conflict closer to Australia and reshaped strategic priorities.",
-          "significance": "This is central to understanding why World War II had a distinct meaning for Australia."
+          "significance": "This is central to understanding why World War II had a distinct meaning for Australia.",
+          "content": [
+            {
+              "type": "image",
+              "src": "https://picsum.photos/seed/pacific/640/360",
+              "caption": "Placeholder image for the Pacific theatre."
+            }
+          ]
         },
         {
           "title": "Women’s roles",
